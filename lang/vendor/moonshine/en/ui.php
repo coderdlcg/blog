@@ -85,5 +85,19 @@ return [
             'file_required' => 'File is required',
             'extension_not_supported' => 'File extension not supported'
         ]
+    ],
+
+    'blog' => [
+        'blog' => 'Blog',
+        'articles' => 'Articles',
+
+        'article' => [
+            'title' => 'The title of the article',
+            'slug' => 'The link on the article',
+            'body' => 'The content of the article',
+        ],
+
+        'categories' => 'Categories',
+        'comments' => 'Comments'
     ]
 ];
