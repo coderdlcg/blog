@@ -106,6 +106,8 @@ return [
         ],
 
         'categories' => 'Categories',
+        'category' => 'Category',
+        'category_parent' => 'Parent category',
         'comments' => 'Comments'
     ]
 ];

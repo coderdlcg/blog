@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\MoonShine\Resources\ArticleResource;
+use App\MoonShine\Resources\CategoryResource;
 use Illuminate\Support\ServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -20,7 +21,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 MenuItem::make('moonshine::ui.blog.articles', new ArticleResource())
                     ->translatable()
                     ->icon('heroicons.outline.document-text'),
-                MenuItem::make('moonshine::ui.blog.categories', '#')
+                MenuItem::make('moonshine::ui.blog.categories', new CategoryResource())
                     ->translatable()
                     ->icon('heroicons.list-bullet'),
                 MenuItem::make('moonshine::ui.blog.comments', '#')

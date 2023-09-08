@@ -106,6 +106,8 @@ return [
         ],
 
         'categories' => 'Категории',
+        'category' => 'Категория',
+        'category_parent' => 'Родительская категория',
         'comments' => 'Комментарии'
     ]
 ];

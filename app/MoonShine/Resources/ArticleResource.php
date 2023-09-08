@@ -10,12 +10,15 @@ use MoonShine\Decorations\Button;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Flex;
 use MoonShine\Decorations\Grid;
+use MoonShine\Fields\BelongsToMany;
 use MoonShine\Fields\Image;
 use MoonShine\Fields\NoInput;
 use MoonShine\Fields\Select;
 use MoonShine\Fields\Slug;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\TinyMce;
+use MoonShine\Filters\BelongsToManyFilter;
+use MoonShine\Filters\TextFilter;
 use MoonShine\Resources\Resource;
 use MoonShine\Fields\ID;
 use MoonShine\Actions\FiltersAction;
@@ -28,8 +31,15 @@ class ArticleResource extends Resource
 
 	public string $titleField = 'title';
 
+    public static string $orderField = 'created_at';
+
+    public static string $orderType = 'DESC';
+
     public static array $activeActions = ['create', 'edit', 'delete'];
 
+    public static array $with = [
+        //
+    ];
     public function fields(): array
 	{
 		return [
@@ -82,6 +92,11 @@ class ArticleResource extends Resource
                             ->removable()
                             ->disk('public')
                             ->dir('articles'),
+
+                        BelongsToMany::make('Categories', 'categories')
+//                            ->asyncSearch()
+                            ->tree('parent_id')
+                            ->hideOnIndex()
                     ]),
                 ])->columnSpan(3),
             ]),
@@ -104,7 +119,12 @@ class ArticleResource extends Resource
 
     public function filters(): array
     {
-        return [];
+        return [
+            TextFilter::make('Title'),
+
+            BelongsToManyFilter::make('Categories')
+                ->select(),
+        ];
     }
 
     public function actions(): array
