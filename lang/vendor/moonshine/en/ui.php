@@ -95,6 +95,14 @@ return [
             'title' => 'The title of the article',
             'slug' => 'The link on the article',
             'body' => 'The content of the article',
+            'thumbnail' => 'Thumbnail',
+            'status'  => 'Status',
+
+            'statuses'  => [
+                'draft' => 'Draft',
+                'published' => 'Published',
+                'moderation' => 'Moderation',
+            ],
         ],
 
         'categories' => 'Categories',

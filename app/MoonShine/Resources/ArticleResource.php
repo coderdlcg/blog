@@ -6,8 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Article;
 
 use MoonShine\Decorations\Block;
+use MoonShine\Decorations\Button;
 use MoonShine\Decorations\Column;
+use MoonShine\Decorations\Flex;
 use MoonShine\Decorations\Grid;
+use MoonShine\Fields\Image;
+use MoonShine\Fields\NoInput;
+use MoonShine\Fields\Select;
 use MoonShine\Fields\Slug;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\TinyMce;
@@ -23,7 +28,9 @@ class ArticleResource extends Resource
 
 	public string $titleField = 'title';
 
-	public function fields(): array
+    public static array $activeActions = ['create', 'edit', 'delete'];
+
+    public function fields(): array
 	{
 		return [
 		    ID::make()
@@ -36,10 +43,12 @@ class ArticleResource extends Resource
                            ->sortable()
                            ->required(),
 
-                       Slug::make(trans('moonshine::ui.blog.article.slug'), 'slug')
-                           ->from('title')
-                           ->unique()
-                           ->hideOnIndex(),
+                       Flex::make([
+                           Slug::make(trans('moonshine::ui.blog.article.slug'), 'slug')
+                               ->from('title')
+                               ->unique()
+                               ->hideOnIndex(),
+                       ]),
 
                        TinyMce::make(trans('moonshine::ui.blog.article.body'), 'body')
                            ->addPlugins('code codesample')
@@ -51,8 +60,28 @@ class ArticleResource extends Resource
 
                 Column::make([
                     Block::make([
-                        Text::make('status')
+                        Button::make(
+                            'Link to article',
+                            $this->getItem() ? route('articles.show', $this->getItem()) : '/',
+                            true
+                        )->icon('clip'),
+                    ]),
+
+                    Block::make([
+                        Text::make(trans('moonshine::ui.blog.article.status'), 'status', function (Article $article) {
+                            return $article->getStatusDesc();
+                        })
+                            ->hideOnForm()
                             ->sortable(),
+
+                        Select::make(trans('moonshine::ui.blog.article.status'), 'status')
+                            ->options(Article::getAllStatusesDesc())
+                            ->hideOnIndex(),
+
+                        Image::make(trans('moonshine::ui.blog.article.thumbnail'), 'thumbnail')
+                            ->removable()
+                            ->disk('public')
+                            ->dir('articles'),
                     ]),
                 ])->columnSpan(3),
             ]),
@@ -70,7 +99,7 @@ class ArticleResource extends Resource
 
     public function search(): array
     {
-        return ['id'];
+        return ['id', 'title'];
     }
 
     public function filters(): array

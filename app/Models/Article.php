@@ -9,6 +9,13 @@ class Article extends Model
 {
     use HasFactory;
 
+    protected const STATUSES = [
+        0 => 'draft',
+        1 => 'published',
+        2 => 'moderation',
+
+    ];
+
     protected $fillable = [
         'title',
         'seo_title',
@@ -22,4 +29,19 @@ class Article extends Model
         'published_at',
         'deleted_at',
     ];
+
+    public function getStatusDesc() : string
+    {
+        return __('moonshine::ui.blog.article.statuses.' . self::STATUSES[$this->status]);
+    }
+
+    static public function getAllStatusesDesc() : array
+    {
+        $statuses = [];
+        foreach (self::STATUSES as $key => $value) {
+            $statuses[$key] = __('moonshine::ui.blog.article.statuses.' . $value);
+        }
+
+        return $statuses;
+    }
 }
