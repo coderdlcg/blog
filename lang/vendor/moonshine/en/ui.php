@@ -92,9 +92,9 @@ return [
         'articles' => 'Articles',
 
         'article' => [
-            'title' => 'The title of the article',
-            'slug' => 'The link on the article',
-            'body' => 'The content of the article',
+            'title' => 'Title',
+            'slug' => 'Link on the article',
+            'body' => 'Content of the article',
             'thumbnail' => 'Thumbnail',
             'status'  => 'Status',
 

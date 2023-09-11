@@ -100,7 +100,7 @@ return [
 
             'statuses'  => [
                 'draft' => 'Черновик',
-                'published' => 'Опубликован',
+                'published' => 'Опубликовано',
                 'moderation' => 'На проверке',
             ],
         ],
