@@ -4,22 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use MoonShine\Models\MoonshineUser;
 
 class Article extends Model
 {
     use HasFactory;
 
-    public function categories() : BelongsToMany
-    {
-        return $this->belongsToMany(Category::class);
-    }
-
     protected const STATUSES = [
         0 => 'draft',
         1 => 'published',
         2 => 'moderation',
-
     ];
 
     protected $fillable = [
@@ -35,6 +33,26 @@ class Article extends Model
         'published_at',
         'deleted_at',
     ];
+
+    public function categories() : BelongsToMany
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function author(): BelongsTo
+    {
+        return $this->belongsTo(MoonshineUser::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function comment(): HasOne
+    {
+        return $this->hasOne(Comment::class)->latestOfMany();
+    }
 
     public function getStatusDesc() : string
     {

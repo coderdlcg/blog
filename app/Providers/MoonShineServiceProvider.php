@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\MoonShine\Resources\ArticleResource;
 use App\MoonShine\Resources\CategoryResource;
+use App\MoonShine\Resources\CommentResource;
+use App\MoonShine\Resources\UserResource;
 use Illuminate\Support\ServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -24,10 +26,12 @@ class MoonShineServiceProvider extends ServiceProvider
                 MenuItem::make('moonshine::ui.blog.categories', new CategoryResource())
                     ->translatable()
                     ->icon('heroicons.list-bullet'),
-                MenuItem::make('moonshine::ui.blog.comments', '#')
+                MenuItem::make('moonshine::ui.blog.comments', new CommentResource())
                     ->translatable()
                     ->icon('heroicons.outline.chat-bubble-bottom-center-text'),
             ])->translatable()->icon('app'),
+
+            MenuItem::make('Users', new UserResource(), 'heroicons.outline.users'),
 
             MenuGroup::make('moonshine::ui.resource.system', [
                 MenuItem::make('moonshine::ui.resource.admins_title', new MoonShineUserResource())
@@ -37,9 +41,6 @@ class MoonShineServiceProvider extends ServiceProvider
                     ->translatable()
                     ->icon('bookmark'),
             ])->translatable()->icon('app'),
-
-            MenuItem::make('Documentation', 'https://laravel.com')
-                ->badge(fn() => 'Check'),
         ]);
     }
 }

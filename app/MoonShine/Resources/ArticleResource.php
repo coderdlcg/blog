@@ -2,6 +2,7 @@
 
 namespace App\MoonShine\Resources;
 
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Article;
 
@@ -10,15 +11,19 @@ use MoonShine\Decorations\Button;
 use MoonShine\Decorations\Column;
 use MoonShine\Decorations\Flex;
 use MoonShine\Decorations\Grid;
+use MoonShine\Fields\BelongsTo;
 use MoonShine\Fields\BelongsToMany;
+use MoonShine\Fields\Date;
 use MoonShine\Fields\Image;
 use MoonShine\Fields\NoInput;
 use MoonShine\Fields\Select;
 use MoonShine\Fields\Slug;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\TinyMce;
+use MoonShine\Filters\BelongsToFilter;
 use MoonShine\Filters\BelongsToManyFilter;
 use MoonShine\Filters\TextFilter;
+use MoonShine\Metrics\ValueMetric;
 use MoonShine\Resources\Resource;
 use MoonShine\Fields\ID;
 use MoonShine\Actions\FiltersAction;
@@ -38,7 +43,8 @@ class ArticleResource extends Resource
     public static array $activeActions = ['create', 'edit', 'delete'];
 
     public static array $with = [
-        //
+        'author',
+        'comments'
     ];
     public function fields(): array
 	{
@@ -52,14 +58,17 @@ class ArticleResource extends Resource
                        Text::make(trans('moonshine::ui.blog.article.title'), 'title')
                            ->sortable()
                            ->required(),
+                       Text::make(trans('moonshine::ui.blog.category'), 'category', function (Article $article) {
+                           return $article->categories->first()->title ?? '-';
+                       })
+                           ->hideOnForm(),
+                       Slug::make(trans('moonshine::ui.blog.article.slug'), 'slug')
+                           ->from('title')
+                           ->unique()
+                           ->hideOnIndex(),
+                   ]),
 
-                       Flex::make([
-                           Slug::make(trans('moonshine::ui.blog.article.slug'), 'slug')
-                               ->from('title')
-                               ->unique()
-                               ->hideOnIndex(),
-                       ]),
-
+                   Block::make([
                        TinyMce::make(trans('moonshine::ui.blog.article.body'), 'body')
                            ->addPlugins('code codesample')
                            ->addToolbar(' | code codesample')
@@ -78,6 +87,18 @@ class ArticleResource extends Resource
                     ]),
 
                     Block::make([
+                        BelongsTo::make('Author', resource: 'name')
+                            ->sortable()
+                            ->asyncSearch()
+                            ->canSee(fn() => auth()->user()->moonshine_user_role_id === 1)
+                            ->required(),
+                    ]),
+
+                    Block::make([
+                        Date::make('Дата и время публикации', 'published_at')
+                            ->sortable()
+                            ->withTime(),
+
                         Text::make(trans('moonshine::ui.blog.article.status'), 'status', function (Article $article) {
                             return $article->getStatusDesc();
                         })
@@ -117,6 +138,19 @@ class ArticleResource extends Resource
         return ['id', 'title'];
     }
 
+    public function metrics(): array
+    {
+        return [
+//            ValueMetric::make('Articles')
+//                ->value(Article::query()->count())
+//                ->columnSpan(2),
+//
+//            ValueMetric::make('Comments')
+//                ->value(Comment::query()->count())
+//                ->columnSpan(2),
+        ];
+    }
+
     public function filters(): array
     {
         return [
@@ -124,9 +158,12 @@ class ArticleResource extends Resource
 
             BelongsToManyFilter::make('Categories')
                 ->select(),
+
+            BelongsToFilter::make('Author', resource: 'name')
+                ->nullable()
+                ->canSee(fn() => auth()->user()->moonshine_user_role_id === 1),
         ];
     }
-
     public function actions(): array
     {
         return [
