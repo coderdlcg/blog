@@ -29,7 +29,7 @@ return new class extends Migration
                 ->default(0);
             $table->text('thumbnail')
                 ->nullable();
-            $table->dateTime('published_at')
+            $table->timestamp('published_at')
                 ->nullable();
             $table->string('title');
             $table->string('seo_title')
@@ -48,6 +48,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('articles');
+        if(app()->isLocal()) {
+            Schema::dropIfExists('articles');
+        }
     }
 };
