@@ -45,6 +45,11 @@ class CategoryResource extends TreeResource
         return 'sorting';
     }
 
+    public function title(): string
+    {
+        return trans('moonshine::ui.blog.categories');
+    }
+
 	public function fields(): array
 	{
 		return [

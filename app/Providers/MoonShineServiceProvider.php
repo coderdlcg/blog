@@ -19,7 +19,7 @@ class MoonShineServiceProvider extends ServiceProvider
     {
         app(MoonShine::class)->menu([
 
-            MenuGroup::make('moonshine::ui.blog.blog', [
+            MenuGroup::make('moonshine::ui.blog.self', [
                 MenuItem::make('moonshine::ui.blog.articles', new ArticleResource())
                     ->translatable()
                     ->icon('heroicons.outline.document-text'),
@@ -29,9 +29,11 @@ class MoonShineServiceProvider extends ServiceProvider
                 MenuItem::make('moonshine::ui.blog.comments', new CommentResource())
                     ->translatable()
                     ->icon('heroicons.outline.chat-bubble-bottom-center-text'),
-            ])->translatable()->icon('app'),
+            ])->translatable()->icon('heroicons.outline.pencil-square'),
 
-            MenuItem::make('Users', new UserResource(), 'heroicons.outline.users'),
+            MenuItem::make('moonshine::ui.users', new UserResource(), )
+                ->translatable()
+                ->icon('heroicons.outline.users'),
 
             MenuGroup::make('moonshine::ui.resource.system', [
                 MenuItem::make('moonshine::ui.resource.admins_title', new MoonShineUserResource())

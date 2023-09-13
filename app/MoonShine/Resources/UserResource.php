@@ -30,19 +30,20 @@ class UserResource extends Resource
         return [
             Grid::make([
                 Column::make([
-                    Block::make('Contact information', [
+                    Block::make(trans('moonshine::ui.user'), [
                         ID::make()->sortable(),
-                        Text::make('Name', 'name'),
-                        Phone::make('Phone', 'phone')-> mask('7 999 999-99-99'),
-                        Email::make('E-mail', 'email'),
+                        Text::make(trans('moonshine::ui.blog.users.name'), 'name', 'name'),
+                        Phone::make(trans('moonshine::ui.blog.users.phone'), 'phone', 'phone')-> mask('7 999 999-99-99'),
+                        Email::make(trans('moonshine::ui.blog.users.email'), 'email', 'email'),
                     ]),
 
-                    Block::make('Change password', [
-                        Password::make('Password')
+                    Block::make(trans('moonshine::ui.resource.change_password'), [
+                        Password::make(trans('moonshine::ui.resource.password'), 'password')
                             ->customAttributes(['autocomplete' => 'new-password'])
                             ->hideOnIndex(),
 
-                        PasswordRepeat::make('Password repeat')
+                        PasswordRepeat::make(trans('moonshine::ui.resource.repeat_password'),'password_repeat')
+                            ->translatable()
                             ->customAttributes(['autocomplete' => 'confirm-password'])
                             ->hideOnIndex(),
                     ]),

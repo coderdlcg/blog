@@ -46,6 +46,12 @@ class ArticleResource extends Resource
         'author',
         'comments'
     ];
+
+    public function title(): string
+    {
+        return trans('moonshine::ui.blog.articles');
+    }
+
     public function fields(): array
 	{
 		return [
@@ -87,7 +93,7 @@ class ArticleResource extends Resource
                     ]),
 
                     Block::make([
-                        BelongsTo::make('Author', resource: 'name')
+                        BelongsTo::make(trans('moonshine::ui.blog.author'), 'author', resource: 'name')
                             ->sortable()
                             ->asyncSearch()
                             ->canSee(fn() => auth()->user()->moonshine_user_role_id === 1)
@@ -95,7 +101,7 @@ class ArticleResource extends Resource
                     ]),
 
                     Block::make([
-                        Date::make('Дата и время публикации', 'published_at')
+                        Date::make(trans('moonshine::ui.blog.article.published_at'), 'published_at')
                             ->sortable()
                             ->withTime(),
 
@@ -154,12 +160,12 @@ class ArticleResource extends Resource
     public function filters(): array
     {
         return [
-            TextFilter::make('Title'),
+            TextFilter::make(trans('moonshine::ui.blog.article.title'), 'title'),
 
-            BelongsToManyFilter::make('Categories')
+            BelongsToManyFilter::make(trans('moonshine::ui.blog.categories'), 'categories')
                 ->select(),
 
-            BelongsToFilter::make('Author', resource: 'name')
+            BelongsToFilter::make(trans('moonshine::ui.blog.author'), 'author', resource: 'name')
                 ->nullable()
                 ->canSee(fn() => auth()->user()->moonshine_user_role_id === 1),
         ];

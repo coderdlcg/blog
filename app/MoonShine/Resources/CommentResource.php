@@ -21,14 +21,19 @@ class CommentResource extends Resource
 
     public static array $with = ['user', 'article'];
 
+    public function title(): string
+    {
+        return trans('moonshine::ui.blog.comments');
+    }
+
 	public function fields(): array
 	{
 		return [
             Block::make([
                 ID::make()->sortable(),
-                BelongsTo::make('Article'),
-                BelongsTo::make('User'),
-                Text::make('Text')->required(),
+                BelongsTo::make(trans('moonshine::ui.blog.article.self'),'article'),
+                BelongsTo::make(trans('moonshine::ui.user'),'user'),
+                Text::make(trans('moonshine::ui.blog.comment.text'), 'text')->required(),
             ])
         ];
 	}
