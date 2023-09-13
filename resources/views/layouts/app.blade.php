@@ -15,17 +15,13 @@
 {{--    <meta name="msapplication-TileColor" content="#7843E9">--}}
 {{--    <meta name="theme-color" content="#7843E9">--}}
 
-{{--    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">--}}
-{{--    <link href="{{ mix('/css/main.css') }}" rel="stylesheet">--}}
-{{--    <script src="{{ mix('/js/app.js') }}" defer></script>--}}
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased">
+<body class="font-sans antialiased bg-white dark:bg-gray-800">
 {{--@include('shared.alert')--}}
 {{--@include('shared.header')--}}
 
-<main class="py-16 lg:py-20">
+<main class="min-h-screen max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-700">
     <div class="container">
         @yield('content')
     </div>
@@ -33,6 +29,5 @@
 
 {{--@include('shared.footer')--}}
 
-<div class="aspect-video"></div>
 </body>
 </html>

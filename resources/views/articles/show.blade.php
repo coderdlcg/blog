@@ -4,12 +4,12 @@
 @section('description', $article->seo_description)
 
 @section('content')
-    <div>
-{{--        <img class="w-full rounded-xl my-8"--}}
-{{--             src="{{ $article->getThumbnail('thumbnail', 'fit', '1000x300', 'articles') }}"--}}
-{{--             alt="{{ $article->title }}" />--}}
-
-        <x-moonshine::thumbnails value="{{ '/storage/' . $article->thumbnail }}"/>
+    <div class="max-w-4xl mx-auto py-8">
+        <div class="py-8">
+            <img class="object-cover w-full h-[400px] rounded-xl bg-blue-50"
+                 src="{{ $article->thumbnail ? '/storage/' . $article->thumbnail : '/storage/no-image.webp' }}"
+                 alt="{{ $article->title }}">
+        </div>
 
         <x-title>{{ $article->title }}</x-title>
 
@@ -24,7 +24,7 @@
 {{--            </div>--}}
 {{--        @endif--}}
 
-        <div class="mt-4">
+        <div class="py-6">
             {!! $article->body !!}
         </div>
     </div>
