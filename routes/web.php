@@ -19,7 +19,8 @@ Route::get('/', [TestController::class, 'index'])->name('home');
 
 Route::controller(ArticleController::class)
     ->name('articles.')
-    ->prefix('articles')->group(function () {
+//    ->prefix('blog')
+    ->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{article:slug}', 'show')->name('show');
     });

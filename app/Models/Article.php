@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 use MoonShine\Models\MoonshineUser;
 
 class Article extends Model
@@ -33,6 +34,15 @@ class Article extends Model
         'published_at',
         'deleted_at',
     ];
+
+    protected static function boot() : void
+    {
+        parent::boot();
+
+        static::creating(function (Article $article) {
+            $article->slug = $article->slug ?? Str::slug($article->title, '-');
+        });
+    }
 
     public function categories() : BelongsToMany
     {
