@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Blog\ArticleController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [TestController::class, 'index'])->name('home');
+Route::get('/test', [TestController::class, 'test'])->name('test.blog');
+Route::get('/test-article', [TestController::class, 'article'])->name('test.article');
 
 Route::controller(ArticleController::class)
     ->name('articles.')

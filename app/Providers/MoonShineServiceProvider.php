@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
-use App\MoonShine\Resources\ArticleResource;
-use App\MoonShine\Resources\CategoryResource;
-use App\MoonShine\Resources\CommentResource;
+use App\MoonShine\Resources\Blog\ArticleResource;
+use App\MoonShine\Resources\Blog\CategoryResource;
+use App\MoonShine\Resources\Blog\CommentResource;
 use App\MoonShine\Resources\UserResource;
 use Illuminate\Support\ServiceProvider;
-use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
 use MoonShine\Menu\MenuItem;
+use MoonShine\MoonShine;
 use MoonShine\Resources\MoonShineUserResource;
 use MoonShine\Resources\MoonShineUserRoleResource;
 

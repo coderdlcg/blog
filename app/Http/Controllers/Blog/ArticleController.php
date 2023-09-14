@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Blog;
 
-use App\Models\Article;
+use App\Http\Controllers\Controller;
+use App\Models\Blog\Article;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View;
-use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {

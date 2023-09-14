@@ -1,21 +1,19 @@
 <?php
 
-namespace App\MoonShine\Resources;
+namespace App\MoonShine\Resources\Blog;
 
-use App\Models\Comment;
+use App\Models\Blog\Article;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Article;
-
+use MoonShine\Actions\FiltersAction;
 use MoonShine\Decorations\Block;
 use MoonShine\Decorations\Button;
 use MoonShine\Decorations\Column;
-use MoonShine\Decorations\Flex;
 use MoonShine\Decorations\Grid;
 use MoonShine\Fields\BelongsTo;
 use MoonShine\Fields\BelongsToMany;
 use MoonShine\Fields\Date;
+use MoonShine\Fields\ID;
 use MoonShine\Fields\Image;
-use MoonShine\Fields\NoInput;
 use MoonShine\Fields\Select;
 use MoonShine\Fields\Slug;
 use MoonShine\Fields\Text;
@@ -23,10 +21,7 @@ use MoonShine\Fields\TinyMce;
 use MoonShine\Filters\BelongsToFilter;
 use MoonShine\Filters\BelongsToManyFilter;
 use MoonShine\Filters\TextFilter;
-use MoonShine\Metrics\ValueMetric;
 use MoonShine\Resources\Resource;
-use MoonShine\Fields\ID;
-use MoonShine\Actions\FiltersAction;
 
 class ArticleResource extends Resource
 {
