@@ -85,5 +85,54 @@ return [
             'file_required' => 'File is required',
             'extension_not_supported' => 'File extension not supported'
         ]
-    ]
+    ],
+
+    'blog' => [
+        'self' => 'Blog',
+        'articles' => 'Articles',
+        'author' => 'Author',
+
+        'article' => [
+            'self' => 'Article',
+            'title' => 'Title',
+            'slug' => 'Link on the article',
+            'body' => 'Content of the article',
+            'thumbnail' => 'Thumbnail',
+            'status'  => 'Status',
+            'published_at' => 'Published at',
+
+            'statuses'  => [
+                'draft' => 'Draft',
+                'published' => 'Published',
+                'moderation' => 'Moderation',
+            ],
+        ],
+
+        'categories' => 'Categories',
+        'category' => 'Category',
+        'category_parent' => 'Parent category',
+        'comments' => 'Comments',
+        'comment' => [
+            'text' => 'Comment text',
+        ],
+
+        'users' => [
+            'self' => 'Users',
+            'name' => 'Name',
+            'phone' => 'Phone',
+            'email' => 'E-mail',
+
+        ]
+    ],
+
+    'market' => [
+        'self' => 'Market',
+        'orders' => 'Orders',
+
+        'catalog' => [
+            'self' => 'Catalog',
+
+        ],
+    ],
+    'users' => 'Users'
 ];
